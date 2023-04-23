@@ -37,19 +37,19 @@ jobs:
       - name: Create packages base folder
         run: mkdir packages
 
-      - name: Pack Core project
+      - name: Pack Common project
         run: dotnet pack --output ${{env.PackagesBaseFolder}} --nologo --configuration ${{env.BuildConfiguration}} ${{env.CommonProject}}
 
-      - name: Publish Core NuGet package to NuGet.org
+      - name: Publish Common NuGet package to NuGet.org
         run: dotnet nuget push ${{env.PackagesBaseFolder}}/*.nupkg --api-key ${{secrets.NUGET_APIKEY}} --source https://api.nuget.org/v3/index.json --skip-duplicate
 
       - name: Clear packages folder
         run: rm packages/*.nupkg
 
-      - name: Pack AspNetCoreProject project
+      - name: Pack AspNetCore project
         run: dotnet pack --output ${{env.PackagesBaseFolder}} --nologo --configuration ${{env.BuildConfiguration}} ${{env.AspNetCoreProject}}
 
-      - name: Publish Security NuGet package to NuGet.org
+      - name: Publish AspNetCore NuGet package to NuGet.org
         run: dotnet nuget push ${{env.PackagesBaseFolder}}/*.nupkg --api-key ${{secrets.NUGET_APIKEY}} --source https://api.nuget.org/v3/index.json --skip-duplicate
 
       - name: Clear packages folder
