@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pug.DataReceiver.Http", "Pug.DataReceiver.Http\Pug.DataReceiver.Http.csproj", "{799065FA-B260-42BD-B527-CC20ED942B98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pug.DataReceiver.AspNetCore", "Pug.DataReceiver.AspNetCore\Pug.DataReceiver.AspNetCore.csproj", "{A2542905-BED8-463B-BF9E-4CDFF8994E0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pug.DataReceiver.Common", "Pug.DataReceiver.Common\Pug.DataReceiver.Common.csproj", "{E7741B4A-B18C-42EB-BA9A-7F73A0E5EFD3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{799065FA-B260-42BD-B527-CC20ED942B98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{799065FA-B260-42BD-B527-CC20ED942B98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{799065FA-B260-42BD-B527-CC20ED942B98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{799065FA-B260-42BD-B527-CC20ED942B98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2542905-BED8-463B-BF9E-4CDFF8994E0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2542905-BED8-463B-BF9E-4CDFF8994E0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2542905-BED8-463B-BF9E-4CDFF8994E0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2542905-BED8-463B-BF9E-4CDFF8994E0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7741B4A-B18C-42EB-BA9A-7F73A0E5EFD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7741B4A-B18C-42EB-BA9A-7F73A0E5EFD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7741B4A-B18C-42EB-BA9A-7F73A0E5EFD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7741B4A-B18C-42EB-BA9A-7F73A0E5EFD3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,34 @@
+name: develop - build
+
+on:
+  push:
+    branches:
+      - develop
+
+env:
+  BuildConfiguration: debug
+  CommonProject: Pug.DataReceiver.Common/Pug.DataReceiver.Common.csproj
+  AspNetCoreProject: Pug.DataReceiver.AspNetCore/Pug.DataReceiver.AspNetCore.csproj
+
+jobs:
+  build:
+    name: Build Projects
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      
+      # Authenticates packages to push to GPR
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1.x' # SDK Version to use.
+          source-url: https://nuget.pkg.github.com/PugCS/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Build Common project
+        run: dotnet build --nologo --configuration ${{env.BuildConfiguration}} ${{env.CommonProject}}
+
+      - name: Build AspNetCoreProject project
+        run: dotnet build --nologo --configuration ${{env.BuildConfiguration}} ${{env.AspNetCoreProject}}

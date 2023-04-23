@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFrameworks>net6.0</TargetFrameworks>
+		<Nullable>enable</Nullable>
+		<OutputType>Library</OutputType>
+		<RootNamespace>Pug.DataReceiver.AspNetCore</RootNamespace>
+		<AssemblyName>Pug.DataReceiver.AspNetCore</AssemblyName>
+		<AssemblyVersion>0.0.1</AssemblyVersion>
+		<PackageId>Pug.DataReceiver.AspNetCore</PackageId>
+		<PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/ndwx/Pug.DataReceiver</PackageProjectUrl>
+		<PackageTags>Pug Data Receiver Framework ASP.NET Core</PackageTags>
+		<PackageVersion>0.0.1</PackageVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Pug.Core" Version="1.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Pug.DataReceiver.Common\Pug.DataReceiver.Common.csproj" />
+	</ItemGroup>
+
+</Project>
