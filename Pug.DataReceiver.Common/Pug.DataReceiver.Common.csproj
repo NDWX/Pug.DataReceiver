@@ -1,16 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;netcoreapp3.1</TargetFrameworks>
+		<TargetFrameworks>netcoreapp3.1;net6</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<RootNamespace>Pug.DataReceiver</RootNamespace>
 		<AssemblyName>Pug.DataReceiver.Common</AssemblyName>
 		<AssemblyVersion>0.0.1</AssemblyVersion>
 		<PackageId>Pug.DataReceiver</PackageId>
 		<PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
-		<PackageProjectUrl>https://github.com/ndwx/Pug.DataReceiver</PackageProjectUrl>
 		<PackageTags>Pug Data Receiver Framework</PackageTags>
 		<PackageVersion>0.0.1</PackageVersion>
+		<Title>Pug.DataReceiver</Title>
+		<Authors />
+		<RepositoryUrl>https://github.com/ndwx/Pug.DataReceiver</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 
 	<ItemGroup>
