@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 
@@ -20,13 +19,20 @@ namespace Pug.DataReceiver.Http.Components
 			return service is not null;
 		}
 
-		private static IResult Handle( OneOf<Unit, DataFormatException, DataSubmissionException, Exception> result )
+		private static IResult Handle( OneOf<Unit, Exception> result )
 		{
 			return result.When(
 					unit => Results.Ok(),
-					dataFormatException => Results.BadRequest( dataFormatException.Message ),
-					dataSubmissionException => Results.BadRequest( dataSubmissionException.Message ),
-					exception => Results.Problem( new ProblemDetails() { Status = 500 } )
+					exception =>
+						exception switch
+						{
+							UnsupportedDataTypeException => Results.StatusCode( 415 ),
+							InvalidDataPathException => Results.NotFound(),
+							DataFormatException e => Results.BadRequest( e.Message ),
+							DataValidationException e => Results.ValidationProblem( new Dictionary<string, string[]>() {["VALIDATION_ERRORS"] = e.Errors} ),
+							DataSubmissionException e => Results.BadRequest( e.Message ),
+							_ => Results.Problem( )
+						}
 				);
 		}
 
@@ -51,37 +57,27 @@ namespace Pug.DataReceiver.Http.Components
 			this WebApplication webApplication,
 			string basePath, string authenticationHeader,
 			Func<string, Task<IDictionary<string, string>>>? credentialsParser = null,
-			Func<OneOf<Unit, DataFormatException, DataSubmissionException, Exception>, Task<IResult>>? resultHandler = null )
+			Func<OneOf<Unit, Exception>, Task<IResult>>? resultHandler = null )
 			where T : IDataReceiver
 		{
-			return webApplication.MapPost( $"/{basePath}/{{**path}}",
-											async (string path, HttpContext context) =>
-											{
-												IDictionary<string, string>? credentials;
+			async Task<IResult> ReceiveData( string path, HttpContext context )
+			{
+				if( context.Request.ContentLength == 0 ) return Results.BadRequest();
 
-												credentials = await GetCredentialsAsync( context, authenticationHeader, credentialsParser );
+				T? dataReceiver = context.RequestServices.GetService<T>();
 
-												T? dataReceiver = context.RequestServices.GetService<T>();
+				if( dataReceiver is null ) return Results.Problem( new ProblemDetails() { Status = 500 } );
 
-												if( dataReceiver is null )
-													return Results.Problem(
-															new ProblemDetails()
-															{
-																Status = 500,
-															}
-														);
+				IDictionary<string, string>? credentials = await GetCredentialsAsync( context, authenticationHeader, credentialsParser );
 
-												OneOf<Unit, DataFormatException, DataSubmissionException, Exception> result =
-													await dataReceiver?.SubmitAsync( credentials, path, context.Request.Body );
+				OneOf<Unit, Exception> result = await dataReceiver?.SubmitAsync( credentials, path, context.Request.Body, context.Request.ContentType )!;
 
-												if( resultHandler is null )
-													return Handle( result );
+				if( resultHandler is null ) return Handle( result );
 
-												return await resultHandler( result );
+				return await resultHandler( result );
+			}
 
-											}
-				);
-
+			return webApplication.MapPost( $"/{basePath}/{{**path}}", ReceiveData );
 		}
 	}
 }
