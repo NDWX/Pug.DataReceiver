@@ -53,6 +53,16 @@ namespace Pug.DataReceiver.Http.Components
 			return credentials;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="webApplication">Instance of <c>WebApplication</c></param>
+		/// <param name="basePath">Base path on which data receiver endpoint should be registered and may be more one or more levels relative to root path</param>
+		/// <param name="authenticationHeader">Name of request header from which credentials should be retrieved</param>
+		/// <param name="credentialsParser">Optional credentials parser</param>
+		/// <param name="resultHandler">Optional <c>IDataReceiver.SubmitAsync</c> result to <c>IResult</c> mapping.</param>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
 		public static RouteHandlerBuilder UseDataReceiver<T>(
 			this WebApplication webApplication,
 			string basePath, string authenticationHeader,
