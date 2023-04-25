@@ -3,17 +3,18 @@
 	<PropertyGroup>
 		<TargetFrameworks>netcoreapp3.1;net6</TargetFrameworks>
 		<Nullable>enable</Nullable>
+		<Title>Pug.DataReceiver</Title>
 		<RootNamespace>Pug.DataReceiver</RootNamespace>
 		<AssemblyName>Pug.DataReceiver.Common</AssemblyName>
-		<AssemblyVersion>0.0.1</AssemblyVersion>
+		<AssemblyVersion>0.0.2</AssemblyVersion>
+		<Authors />
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/ndwx/Pug.DataReceiver</RepositoryUrl>
 		<PackageId>Pug.DataReceiver</PackageId>
 		<PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
 		<PackageTags>Pug Data Receiver Framework</PackageTags>
-		<PackageVersion>0.0.1</PackageVersion>
-		<Title>Pug.DataReceiver</Title>
-		<Authors />
-		<RepositoryUrl>https://github.com/ndwx/Pug.DataReceiver</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
+		<PackageVersion>0.0.2</PackageVersion>
+		<PackageReleaseNotes>Data content type support.</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>
