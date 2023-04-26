@@ -8,6 +8,7 @@
 		<AssemblyName>Pug.DataReceiver.Common</AssemblyName>
 		<AssemblyVersion>0.0.2</AssemblyVersion>
 		<Authors />
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/ndwx/Pug.DataReceiver</RepositoryUrl>
 		<PackageId>Pug.DataReceiver</PackageId>

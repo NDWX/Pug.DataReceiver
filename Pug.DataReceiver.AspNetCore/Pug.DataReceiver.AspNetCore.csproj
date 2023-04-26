@@ -7,15 +7,15 @@
 		<Title>Pug.DataReceiver.AspNetCore</Title>
 		<RootNamespace>Pug.DataReceiver.AspNetCore</RootNamespace>
 		<AssemblyName>Pug.DataReceiver.AspNetCore</AssemblyName>
-		<AssemblyVersion>0.0.2</AssemblyVersion>
+		<AssemblyVersion>0.0.3</AssemblyVersion>
 		<RepositoryType>Git</RepositoryType>
 		<RepositoryUrl>https://github.com/ndwx/Pug.DataReceiver</RepositoryUrl>
 		<IsPackable>true</IsPackable>
 		<PackageId>Pug.DataReceiver.AspNetCore</PackageId>
 		<PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
 		<PackageTags>Pug Data Receiver Framework ASP.NET Core</PackageTags>
-		<PackageVersion>0.0.2</PackageVersion>
-		<PackageReleaseNotes>Data content type support.</PackageReleaseNotes>
+		<PackageVersion>0.0.3</PackageVersion>
+		<PackageReleaseNotes>Endpoint route registration enhancements.</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>
