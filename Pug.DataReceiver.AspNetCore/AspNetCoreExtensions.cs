@@ -96,7 +96,7 @@ namespace Pug.DataReceiver.Http.Components
 			string route = basePath.TrimEnd( '/' );
 			route = route.StartsWith('/')? route : $"/{route}";
 
-			route = $"{route}/{{**path?}}";
+			route = $"{route}/{{**path}}";
 			
 			return webApplication.MapPost( route, ReceiveData );
 		}
