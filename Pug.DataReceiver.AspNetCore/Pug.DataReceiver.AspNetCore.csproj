@@ -1,21 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6</TargetFrameworks>
+		<TargetFrameworks>net6.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<OutputType>Library</OutputType>
 		<Title>Pug.DataReceiver.AspNetCore</Title>
 		<RootNamespace>Pug.DataReceiver.AspNetCore</RootNamespace>
 		<AssemblyName>Pug.DataReceiver.AspNetCore</AssemblyName>
-		<AssemblyVersion>0.0.4</AssemblyVersion>
+		<AssemblyVersion>0.0.5</AssemblyVersion>
 		<RepositoryType>Git</RepositoryType>
 		<RepositoryUrl>https://github.com/ndwx/Pug.DataReceiver</RepositoryUrl>
 		<IsPackable>true</IsPackable>
 		<PackageId>Pug.DataReceiver.AspNetCore</PackageId>
 		<PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
 		<PackageTags>Pug Data Receiver Framework ASP.NET Core</PackageTags>
-		<PackageVersion>0.0.4</PackageVersion>
-		<PackageReleaseNotes>Endpoint route registration enhancements.</PackageReleaseNotes>
+		<PackageVersion>0.0.5</PackageVersion>
+		<PackageReleaseNotes>IDataReceiver.Submit error handling and credentials parsing enhancements</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>

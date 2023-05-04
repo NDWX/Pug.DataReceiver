@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -27,18 +28,19 @@ namespace Pug.DataReceiver.Http.Components
 						exception switch
 						{
 							UnsupportedDataTypeException => Results.StatusCode( 415 ),
+							InvalidCredentialException => Results.Unauthorized(),
 							InvalidDataPathException => Results.NotFound(),
 							DataFormatException e => Results.BadRequest( e.Message ),
 							DataValidationException e => Results.ValidationProblem( new Dictionary<string, string[]>() {["VALIDATION_ERRORS"] = e.Errors} ),
 							DataSubmissionException e => Results.BadRequest( e.Message ),
-							_ => Results.Problem( )
+							_ => throw exception
 						}
 				);
 		}
 
 		private static async Task<IDictionary<string, string>?> GetCredentialsAsync(
 			HttpContext context, string authenticationHeader,
-			Func<string, Task<IDictionary<string, string>>>? credentialsParser )
+			Func<string, Task<IDictionary<string, string>?>>? credentialsParser )
 		{
 			IDictionary<string, string>? credentials = null;
 
@@ -67,7 +69,7 @@ namespace Pug.DataReceiver.Http.Components
 		public static RouteHandlerBuilder UseDataReceiver<T>(
 			this WebApplication webApplication,
 			string basePath = "/", bool allowSubPath = false, string? authenticationHeader = null,
-			Func<string, Task<IDictionary<string, string>>>? credentialsParser = null,
+			Func<string, Task<IDictionary<string, string>?>>? credentialsParser = null,
 			Func<OneOf<Unit, Exception>, Task<IResult>>? resultHandler = null )
 			where T : IDataReceiver
 		{

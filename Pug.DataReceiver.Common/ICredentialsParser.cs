@@ -5,6 +5,6 @@ namespace Pug.DataReceiver
 {
 	public interface ICredentialsParser
 	{
-		Task<IDictionary<string, string>> ParseAsync( string? credentials );
+		Task<IDictionary<string, string>?> ParseAsync( string? credentials );
 	}
 }
