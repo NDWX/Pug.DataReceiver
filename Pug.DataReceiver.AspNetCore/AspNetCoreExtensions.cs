@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 
 namespace Pug.DataReceiver.Http.Components
@@ -39,12 +40,19 @@ namespace Pug.DataReceiver.Http.Components
 		}
 
 		private static async Task<IDictionary<string, string>?> GetCredentialsAsync(
-			HttpContext context, string authenticationHeader,
-			Func<string, Task<IDictionary<string, string>?>>? credentialsParser )
+			HttpContext context, string authenticationHeaderName,
+			Func<string, Task<IDictionary<string, string>?>>? credentialsParser, ILogger? logger )
 		{
 			IDictionary<string, string>? credentials = null;
 
-			if( !context.Request.Headers.TryGetValue( authenticationHeader, out StringValues credentialsStrings ) ) return null;
+			if( !context.Request.Headers.TryGetValue( authenticationHeaderName, out StringValues credentialsStrings ) )
+			{
+				logger?.LogInformation( "Authentication header {AuthenticationHeaderName} not specified in request", authenticationHeaderName );
+				return null;
+			}
+			
+			logger?.LogDebug( "Authentication header {AuthenticationHeaderName}: {AuthenticationHeaderValue}", 
+							authenticationHeaderName, credentialsStrings.ToString() );
 
 			if( credentialsParser is null && context.RequestServices.TryGetService( out ICredentialsParser? service ) )
 				credentialsParser = service!.ParseAsync;
@@ -75,18 +83,28 @@ namespace Pug.DataReceiver.Http.Components
 		{
 			async Task<IResult> ReceiveData( string? path, HttpContext context )
 			{
+				ILoggerFactory? loggerFactory = context.RequestServices.GetService<ILoggerFactory>();
+				ILogger? logger = loggerFactory?.CreateLogger( $"IDataReceiver/{basePath}" );
+
 				if( !allowSubPath && !string.IsNullOrWhiteSpace( path ) )
+				{
+					logger?.LogInformation( "Sub-path '{SubPath}' is not allowed", path );
 					return Results.NotFound();
-				
+				}
+
 				if( context.Request.ContentLength == 0 ) return Results.BadRequest();
 
 				T? dataReceiver = context.RequestServices.GetService<T>();
 
-				if( dataReceiver is null ) return Results.Problem( new ProblemDetails() { Status = 500 } );
+				if( dataReceiver is null )
+				{
+					logger?.LogError( "Data receiver '{DataReceiver}' not found", typeof(T).FullName );
+					return Results.Problem( new ProblemDetails() { Status = 500 } );
+				}
 
 				IDictionary<string, string>? credentials = string.IsNullOrWhiteSpace(authenticationHeader)?
 																null :
-																await GetCredentialsAsync( context, authenticationHeader, credentialsParser );
+																await GetCredentialsAsync( context, authenticationHeader, credentialsParser, logger );
 
 				OneOf<Unit, Exception> result = await dataReceiver.SubmitAsync( credentials, path, context.Request.Body, context.Request.ContentType )!;
 
